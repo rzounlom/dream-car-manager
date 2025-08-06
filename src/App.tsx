@@ -1,10 +1,19 @@
 import "./App.css";
 
+import CarList from "./components/cars/CarList";
+import Footer from "./components/footer/Footer";
+import Landing from "./pages/landing/Landing";
+import Navbar from "./components/navbar/Navbar";
+import { cars } from "./data/cars";
+
 function App() {
   return (
-    <>
-      <h1>Hello World</h1>
-    </>
+    <div className="page-container">
+      <Navbar />
+      <Landing />
+      <CarList cars={cars} />
+      <Footer />
+    </div>
   );
 }
 
