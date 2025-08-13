@@ -12,10 +12,11 @@ import { TiHeartFullOutline } from "react-icons/ti";
 
 // Define the props interface for this component
 // This tells TypeScript what props this component expects to receive
-// In this case, it expects a 'car' prop of type Car and an 'onDeleteCar' function
+// In this case, it expects a 'car' prop of type Car and handler functions
 interface CarCardProps {
   car: Car;
   onDeleteCar: (carId: string) => void; // Function to handle deleting this car
+  onToggleFavorite: (carId: string) => void; // Function to handle toggling favorite status
 }
 
 // Define the CarCard component using React.FC (Function Component) type
@@ -27,6 +28,7 @@ const CarCard: React.FC<CarCardProps> = ({
   // We're extracting: year, make, model, description, imageUrl, favorite, and id
   car: { year, make, model, description, imageUrl, favorite, id },
   onDeleteCar, // Extract the delete handler function
+  onToggleFavorite, // Extract the toggle favorite handler function
 }) => {
   // The component returns JSX (JavaScript XML) which describes what the UI should look like
   return (
@@ -38,7 +40,12 @@ const CarCard: React.FC<CarCardProps> = ({
           {/* Conditional rendering using ternary operator */}
           {/* If favorite is true, show filled heart; otherwise show empty heart */}
           {/* This is a common React pattern for conditional UI elements */}
-          {favorite ? <TiHeartFullOutline /> : <IoMdHeartEmpty />}
+          {/* Clicking the heart icon toggles the favorite status */}
+          {favorite ? (
+            <TiHeartFullOutline onClick={() => onToggleFavorite(id)} />
+          ) : (
+            <IoMdHeartEmpty onClick={() => onToggleFavorite(id)} />
+          )}
         </div>
       </div>
 

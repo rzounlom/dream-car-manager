@@ -62,6 +62,28 @@ function App() {
     });
   };
 
+  // Handler function to toggle the favorite status of a car
+  // This function takes a car ID and flips the favorite boolean for that car
+  const toggleFavorite = (carId: string) => {
+    // Use setCarsState to update the cars array
+    // We use the functional update pattern to ensure we're working with the latest state
+    setCarsState((prevCars) => {
+      // Map over the cars array and update the specific car's favorite status
+      return prevCars.map((car) => {
+        // If this is the car we want to toggle, flip its favorite status
+        if (car.id === carId) {
+          return {
+            ...car, // Spread all existing car properties
+            favorite: !car.favorite, // Toggle the favorite boolean (true becomes false, false becomes true)
+            updatedAt: new Date().toISOString(), // Update the timestamp
+          };
+        }
+        // Return the car unchanged if it's not the one we're toggling
+        return car;
+      });
+    });
+  };
+
   // The component returns JSX that defines the overall page structure
   return (
     // Main container div that wraps the entire application
@@ -80,7 +102,11 @@ function App() {
       {/* We pass the carsState as a prop instead of the direct import */}
       {/* This allows the component to display the current state of cars data */}
       {/* Later, we can pass setCarsState to child components to allow them to update the cars */}
-      <CarList cars={carsState} onDeleteCar={deleteCar} />
+      <CarList
+        cars={carsState}
+        onDeleteCar={deleteCar}
+        onToggleFavorite={toggleFavorite}
+      />
 
       {/* Footer component - appears at the bottom of the page */}
       {/* This typically contains copyright information and links */}

@@ -13,18 +13,20 @@ import CarCard from "./CarCard";
 import { type FC } from "react";
 
 // Define the props interface for this component
-// This component expects an array of Car objects and a delete handler function
+// This component expects an array of Car objects and handler functions
 // The 'cars' prop will be passed down from a parent component
 // The 'onDeleteCar' prop is a function that handles deleting cars by their ID
+// The 'onToggleFavorite' prop is a function that handles toggling favorite status by car ID
 type CarListProps = {
   cars: Car[];
   onDeleteCar: (carId: string) => void;
+  onToggleFavorite: (carId: string) => void;
 };
 
 // Define the CarList component
 // This component takes an array of cars and renders each one as a CarCard
-// It also passes down the delete handler to each CarCard
-const CarList: FC<CarListProps> = ({ cars, onDeleteCar }) => {
+// It also passes down the delete and toggle favorite handlers to each CarCard
+const CarList: FC<CarListProps> = ({ cars, onDeleteCar, onToggleFavorite }) => {
   // The component returns JSX that renders a container with all the car cards
   return (
     // Main container with id and CSS class for styling
@@ -38,8 +40,13 @@ const CarList: FC<CarListProps> = ({ cars, onDeleteCar }) => {
         // key={car.id} is required by React when rendering lists
         // React uses the key to efficiently update the DOM when the list changes
         // Without a key, React would have to re-render the entire list on every change
-        // We pass the onDeleteCar function to each CarCard so they can delete themselves
-        <CarCard key={car.id} car={car} onDeleteCar={onDeleteCar} />
+        // We pass the onDeleteCar and onToggleFavorite functions to each CarCard
+        <CarCard
+          key={car.id}
+          car={car}
+          onDeleteCar={onDeleteCar}
+          onToggleFavorite={onToggleFavorite}
+        />
       ))}
     </div>
   );
