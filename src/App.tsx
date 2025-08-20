@@ -6,6 +6,7 @@ import type { Car, NewCar } from "./types";
 // Import all the components that make up the application
 // These are the building blocks that will be composed together in the App component
 import CarList from "./components/cars/CarList"; // Component that displays the list of cars
+import DeleteModal from "./components/modals/DeleteModal"; // Modal for confirming car deletion
 import Footer from "./components/footer/Footer"; // Footer component at the bottom of the page
 import Landing from "./pages/landing/Landing"; // Landing page/hero section
 import Navbar from "./components/navbar/Navbar"; // Navigation bar at the top
@@ -29,6 +30,8 @@ function App() {
 
   // State for controlling modal visibility
   const [showModal, setShowModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [carToDelete, setCarToDelete] = useState<Car | null>(null);
 
   // Handler function to open the modal
   const handleOpenModal = () => {
@@ -38,6 +41,21 @@ function App() {
   // Handler function to close the modal
   const handleCloseModal = () => {
     setShowModal(false);
+  };
+
+  // Handler function to open the delete modal
+  const handleOpenDeleteModal = (carId: string) => {
+    const car = carsState.find((c) => c.id === carId);
+    if (car) {
+      setCarToDelete(car);
+      setShowDeleteModal(true);
+    }
+  };
+
+  // Handler function to close the delete modal
+  const handleCloseDeleteModal = () => {
+    setShowDeleteModal(false);
+    setCarToDelete(null);
   };
 
   // Handler function to add a new car to the cars state
@@ -67,6 +85,13 @@ function App() {
       // This creates a new array with all cars except the one to be deleted
       return prevCars.filter((car) => car.id !== carId);
     });
+  };
+
+  // Handler function to confirm car deletion
+  const handleConfirmDelete = () => {
+    if (carToDelete) {
+      deleteCar(carToDelete.id);
+    }
   };
 
   // Handler function to toggle the favorite status of a car
@@ -111,7 +136,7 @@ function App() {
       {/* Later, we can pass setCarsState to child components to allow them to update the cars */}
       <CarList
         cars={carsState}
-        onDeleteCar={deleteCar}
+        onDeleteCar={handleOpenDeleteModal}
         onToggleFavorite={toggleFavorite}
       />
 
@@ -124,6 +149,14 @@ function App() {
         show={showModal}
         onHide={handleCloseModal}
         onSubmit={addCar}
+      />
+
+      {/* Delete Confirmation Modal */}
+      <DeleteModal
+        show={showDeleteModal}
+        onHide={handleCloseDeleteModal}
+        onConfirm={handleConfirmDelete}
+        car={carToDelete}
       />
     </div>
   );
