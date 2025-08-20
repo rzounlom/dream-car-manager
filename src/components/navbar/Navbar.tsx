@@ -81,6 +81,7 @@ const Navbar: FC<NavbarProps> = ({ handleOpenModal }) => {
               {/* When clicked, this will call the onAddCar function passed from the parent */}
               {/* This function now opens the modal instead of directly adding a car */}
               <a
+                href="#cars"
                 className={scrolled ? "scrolled" : ""}
                 onClick={handleOpenModal}
               >
