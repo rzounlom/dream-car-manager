@@ -29,8 +29,8 @@ const EditCarModal: FC<EditCarModalProps> = ({
     description: "",
     imageUrl: "",
     favorite: false,
-    createdAt: "",
-    updatedAt: "",
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   });
 
   // Update form data when car prop changes
