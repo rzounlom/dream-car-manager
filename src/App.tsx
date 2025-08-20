@@ -83,6 +83,8 @@ function App() {
     const newCar: Car = {
       id: `${Date.now()}`, // Unique identifier for this car (string format) Current timestamp
       ...newCarData,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     };
 
     // Use setCarsState to update the cars array

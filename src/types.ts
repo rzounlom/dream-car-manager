@@ -10,4 +10,4 @@ export type Car = {
   updatedAt: string;
 };
 
-export type NewCar = Omit<Car, "id">;
+export type NewCar = Omit<Car, "id" | "createdAt" | "updatedAt">;
