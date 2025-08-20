@@ -7,6 +7,7 @@ import type { Car, NewCar } from "./types";
 // These are the building blocks that will be composed together in the App component
 import CarList from "./components/cars/CarList"; // Component that displays the list of cars
 import DeleteModal from "./components/modals/DeleteModal"; // Modal for confirming car deletion
+import EditCarModal from "./components/modals/EditCarModal"; // Modal for editing cars
 import Footer from "./components/footer/Footer"; // Footer component at the bottom of the page
 import Landing from "./pages/landing/Landing"; // Landing page/hero section
 import Navbar from "./components/navbar/Navbar"; // Navigation bar at the top
@@ -31,7 +32,9 @@ function App() {
   // State for controlling modal visibility
   const [showModal, setShowModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const [carToDelete, setCarToDelete] = useState<Car | null>(null);
+  const [carToEdit, setCarToEdit] = useState<Car | null>(null);
 
   // Handler function to open the modal
   const handleOpenModal = () => {
@@ -56,6 +59,21 @@ function App() {
   const handleCloseDeleteModal = () => {
     setShowDeleteModal(false);
     setCarToDelete(null);
+  };
+
+  // Handler function to open the edit modal
+  const handleOpenEditModal = (carId: string) => {
+    const car = carsState.find((c) => c.id === carId);
+    if (car) {
+      setCarToEdit(car);
+      setShowEditModal(true);
+    }
+  };
+
+  // Handler function to close the edit modal
+  const handleCloseEditModal = () => {
+    setShowEditModal(false);
+    setCarToEdit(null);
   };
 
   // Handler function to add a new car to the cars state
@@ -92,6 +110,19 @@ function App() {
     if (carToDelete) {
       deleteCar(carToDelete.id);
     }
+  };
+
+  // Handler function to update a car
+  const updateCar = (updatedCar: Car) => {
+    setCarsState((prevCars) => {
+      return prevCars.map((car) => {
+        if (car.id === updatedCar.id) {
+          return updatedCar;
+        }
+        return car;
+      });
+    });
+    handleCloseEditModal();
   };
 
   // Handler function to toggle the favorite status of a car
@@ -137,6 +168,7 @@ function App() {
       <CarList
         cars={carsState}
         onDeleteCar={handleOpenDeleteModal}
+        onEditCar={handleOpenEditModal}
         onToggleFavorite={toggleFavorite}
       />
 
@@ -157,6 +189,14 @@ function App() {
         onHide={handleCloseDeleteModal}
         onConfirm={handleConfirmDelete}
         car={carToDelete}
+      />
+
+      {/* Edit Car Modal */}
+      <EditCarModal
+        show={showEditModal}
+        onHide={handleCloseEditModal}
+        onSubmit={updateCar}
+        car={carToEdit}
       />
     </div>
   );

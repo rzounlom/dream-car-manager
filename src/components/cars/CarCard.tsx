@@ -16,6 +16,7 @@ import { TiHeartFullOutline } from "react-icons/ti";
 interface CarCardProps {
   car: Car;
   onDeleteCar: (carId: string) => void; // Function to handle deleting this car
+  onEditCar: (carId: string) => void; // Function to handle editing this car
   onToggleFavorite: (carId: string) => void; // Function to handle toggling favorite status
 }
 
@@ -28,6 +29,7 @@ const CarCard: React.FC<CarCardProps> = ({
   // We're extracting: year, make, model, description, imageUrl, favorite, and id
   car: { year, make, model, description, imageUrl, favorite, id },
   onDeleteCar, // Extract the delete handler function
+  onEditCar, // Extract the edit handler function
   onToggleFavorite, // Extract the toggle favorite handler function
 }) => {
   // The component returns JSX (JavaScript XML) which describes what the UI should look like
@@ -77,8 +79,10 @@ const CarCard: React.FC<CarCardProps> = ({
 
       {/* Action buttons section */}
       <div className="car-footer">
-        {/* Edit button - currently non-functional (would need onClick handler) */}
-        <button className="edit-btn">Edit</button>
+        {/* Edit button - opens the edit modal for this car */}
+        <button className="edit-btn" onClick={() => onEditCar(id)}>
+          Edit
+        </button>
 
         {/* Delete button - calls the onDeleteCar function with this car's ID */}
         <button
