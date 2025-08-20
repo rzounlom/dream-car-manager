@@ -22,8 +22,6 @@ const NewCarModal: FC<NewCarModalProps> = ({ show, onHide, onSubmit }) => {
     description: "",
     imageUrl: "",
     favorite: false,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
   });
 
   // Handler function to handle form input changes
@@ -49,8 +47,6 @@ const NewCarModal: FC<NewCarModalProps> = ({ show, onHide, onSubmit }) => {
       description: "",
       imageUrl: "",
       favorite: false,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
     });
   };
 
@@ -64,8 +60,6 @@ const NewCarModal: FC<NewCarModalProps> = ({ show, onHide, onSubmit }) => {
       description: "",
       imageUrl: "",
       favorite: false,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
     });
     onHide();
   };
