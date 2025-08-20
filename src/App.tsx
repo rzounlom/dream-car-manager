@@ -155,7 +155,7 @@ function App() {
       {/* Navigation bar component - appears at the top of every page */}
       {/* This component handles navigation and changes appearance on scroll */}
       {/* We pass the handleOpenModal function as a prop so the navbar can trigger opening the modal */}
-      <Navbar onAddCar={handleOpenModal} />
+      <Navbar handleOpenModal={handleOpenModal} />
 
       {/* Landing page component - the hero section users see first */}
       {/* This contains the main title and call-to-action button */}

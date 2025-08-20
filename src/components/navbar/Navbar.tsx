@@ -10,13 +10,13 @@ import { type FC, useEffect, useState } from "react";
 // Define the props interface for this component
 // This tells TypeScript what props this component expects to receive
 interface NavbarProps {
-  onAddCar: () => void; // Function to handle opening the add car modal
+  handleOpenModal: () => void; // Function to handle opening the add car modal
 }
 
 // Define the Navbar component
 // This component creates a navigation bar that changes appearance when scrolling
 // It also handles opening the Add Car modal through the onAddCar prop
-const Navbar: FC<NavbarProps> = ({ onAddCar }) => {
+const Navbar: FC<NavbarProps> = ({ handleOpenModal }) => {
   // useState hook creates a state variable and a function to update it
   // scrolled: boolean state that tracks whether the user has scrolled down
   // setScrolled: function to update the scrolled state
@@ -80,7 +80,10 @@ const Navbar: FC<NavbarProps> = ({ onAddCar }) => {
               {/* Anchor element with onClick handler */}
               {/* When clicked, this will call the onAddCar function passed from the parent */}
               {/* This function now opens the modal instead of directly adding a car */}
-              <a className={scrolled ? "scrolled" : ""} onClick={onAddCar}>
+              <a
+                className={scrolled ? "scrolled" : ""}
+                onClick={handleOpenModal}
+              >
                 Add Car
               </a>
             </li>
